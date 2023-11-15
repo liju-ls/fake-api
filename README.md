@@ -9,7 +9,7 @@ Fake data in JSON format for frontend development.
 ### Get 10 Posts
 
 ```http
-~ GET /posts
+GET /posts
 ```
 
 Get 10 posts in JSON format.
