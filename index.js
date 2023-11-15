@@ -1,13 +1,27 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
-
-const infoRouter = require("./routes/info");
-const notFound = require("./middleware/404-page");
-
+const path = require("path");
 dotenv.config();
-app.use("/", infoRouter);
-app.use(notFound);
+const userRouter = require("./routes/user");
+const postRouter = require("./routes/post");
+const fileNotFound = require("./middleware/fileNotFound");
+const mongoose = require("mongoose");
+const public = path.join(__dirname + "/public");
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("connected to mongodb."))
+  .catch((err) => console.log("something wrong : " + err));
+
+app.use(express.static(public));
+
+app.get("/", (req, res) => {
+  res.status(200).sendFile("index.html", { root: public });
+});
+app.use("/", userRouter);
+app.use("/", postRouter);
+app.use(fileNotFound);
 
 app.listen(
   process.env.PORT,

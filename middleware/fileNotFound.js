@@ -1,5 +1,5 @@
 const NotFoundPage = (req, res, next) => {
-  res.status(404).send("404 page not found.");
+  res.status(404).send("<h2>Nothing here. See the documentation</p>");
 };
 
 module.exports = NotFoundPage;
